@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo Todo App</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
+    <a class="navbar-brand" href="#">TODO</a>
+</nav>
+
+<h1 class="text-center">Demo Todo App</h1>
+
+<div class="container" style="">
+    <br>
+    <form class="form" action="/addTodo/" method="POST" >{% csrf_token %}
+        <div class="row">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Enter New Task" name="content">
+            </div>
+            <div class="col">
+                <button  type="submit" class="btn btn-success">Submit</button>
+            </div>
+        </div>
+    </form>
+    <br>
+    <table class="table">
+        <thead class="thead-dark" align="text-center">
+            <tr>
+                <th style="width: 78%">ToDo Item</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for todo_item in all_items %}
+            <tr>
+<!--                <td id="{{ todo_item.id }}">-->
+<!--                    {{ todo_item.content }}-->
+<!--                </td>-->
+                <td>
+                    <form id="{{ todo_item.id }}" class="form" action="/editTodo/{{todo_item.id}}/" method="POST">{% csrf_token %}
+                        <div class="row">
+                            <div class="col-10">
+                                <input type="text" class="form-control" value="{{ todo_item.content }}" name="content" style="border-width:0px;border:none;">
+                            </div>
+                            <div class="col-2">
+                                <button type="submit" class="btn btn-success" hidden>Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </td>
+                <td>
+                    <form action="/doneTodo/{{todo_item.id}}/"
+                          style="display: inline;"
+                          method="POST">{% csrf_token %}
+                          <button type="submit" class="btn btn-primary">Done</button>
+                    </form>
+
+                          <button class="btn btn-warning" onclick="modifyTodo({{ todo_item.id }})" >Edit</button>
+
+                    <form action="/deleteTodo/{{todo_item.id}}/"
+                          style="display: inline;"
+                          method="POST">{% csrf_token %}
+                          <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br><br>
+</div>
+
+<footer class="py-3 bg-dark text-white-50">
+
+
+    <div class="container text-center" style="color: white">
+        <small>Made with in India</small>
+    </div>
+
+</footer>
+
+<style>
+
+    footer {
+        position: fixed;
+        height: 50px;
+        bottom: 0;
+        width: 100%;
+    }
+
+
+</style>
+
+<script>
+      function modifyTodo(todo_id) {
+        console.log("here");
+        var newton = document.getElementById(todo_id);
+        console.log(newton);
+        newton.getElementsByTagName('input')[1].style = "border-width:2px;"
+        var einstein = newton.getElementsByTagName('Button')[0];
+        console.log(einstein);
+        einstein.removeAttribute('hidden');
+      }
+</script>
+
+</body>
+</html>

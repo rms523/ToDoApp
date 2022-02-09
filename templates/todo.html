@@ -16,20 +16,29 @@
     <a class="navbar-brand" href="#">TODO</a>
 </nav>
 
-<h1 class="text-center">Demo Todo App</h1>
+<!--<h1 class="text-center">Demo Todo App</h1>-->
 
 <div class="container" style="">
     <br>
-    <form class="form" action="/addTodo/" method="POST" >{% csrf_token %}
-        <div class="row">
-            <div class="col">
-                <input type="text" class="form-control" placeholder="Enter New Task" name="content">
+    </p>
+    <div style="width: 80%; display: inline-block; float: left;">
+        <form class="form" action="/addTodo/" method="POST">{% csrf_token %}
+            <div class="row">
+                <div class="col-md-8">
+                    <input type="text" class="form-control" placeholder="Enter New Task" name="content">
+                </div>
+                <div class="col-md-2 offset-md-1">
+                    <button  type="submit" class="btn btn-success">Submit Task</button>
+                </div>
             </div>
-            <div class="col">
-                <button  type="submit" class="btn btn-success">Submit</button>
-            </div>
-        </div>
-    </form>
+        </form>
+    </div>
+    <div style="display: inline-block">
+        <form action="/doneTasks/" method="POST">{% csrf_token %}
+          <button type="submit" class="btn btn-success">Completed Tasks</button>
+        </form>
+    </div>
+    </p>
     <br>
     <table class="table">
         <thead class="thead-dark" align="text-center">
